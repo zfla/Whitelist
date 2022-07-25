@@ -13,13 +13,12 @@ export default function Home() {
   const web3ModalRef = useRef();
 
   /**
-   * @param {*} needSigner
+   * @param {*} needSigner - True if you need the signer, default false otherwise
    */
   const getProviderOrSigner = async (needSigner = false) => {
     const provider = await web3ModalRef.current.connect();
     const web3Provider = new providers.Web3Provider(provider);
 
-    // If user is not connected to the Rinkeby network, let them know and throw an error
     const { chainId } = await web3Provider.getNetwork();
     if (chainId !== 4) {
       window.alert("Change the network to Rinkeby");
@@ -68,10 +67,10 @@ export default function Home() {
       console.error(err);
     }
   };
-
-
+ 
   const checkIfAddressInWhitelist = async () => {
     try {
+
       const signer = await getProviderOrSigner(true);
       const whitelistContract = new Contract(
         WHITELIST_CONTRACT_ADDRESS,
@@ -88,6 +87,7 @@ export default function Home() {
     }
   };
 
+
   const connectWallet = async () => {
     try {
       await getProviderOrSigner();
@@ -99,6 +99,7 @@ export default function Home() {
       console.error(err);
     }
   };
+
 
   const renderButton = () => {
     if (walletConnected) {
@@ -126,10 +127,10 @@ export default function Home() {
     }
   };
 
+
   useEffect(() => {
     if (!walletConnected) {
-      // Assign the Web3Modal class to the reference object by setting it's `current` value
-      // The `current` value is persisted throughout as long as this page is open
+
       web3ModalRef.current = new Web3Modal({
         network: "rinkeby",
         providerOptions: {},

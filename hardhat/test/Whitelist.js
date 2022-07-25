@@ -1,10 +1,10 @@
-const {expect} = require("chai");
-const {ethers} = require("hardhat");
+const {expect} = require("chai")
+const {ethers} = require("hardhat")
 
 describe("Whitelist", function() {
   let Whitelist, WhitelistContract, owner, addr1, addr2, addr3, addrs
   beforeEach(async function() {
-    Whitelist = ethers.getContractFactory("Whitelist");
+    Whitelist = ethers.getContractFactory("Whitelist")
     ;[owner, addr1, addr2, addr3, ...addrs] = ethers.getSigners()
     WhitelistContract = await Whitelist.deploy(1)
     WhitelistContract.connect(addr1).addToWhitelist()
